@@ -1,0 +1,23 @@
+# ============================================================
+# LibreTV · Render 部署配置（推荐：免费 Web Service，无需信用卡）
+# 仓库：lilijunsuper-bit/LibreTV-Next
+# 部署步骤：
+#   1. 打开 render.com 并登录
+#   2. New + → Blueprint（从本仓库自动读取 render.yaml）
+#   3. 连接 lilijunsuper-bit/LibreTV-Next 仓库
+#   4. 部署后到 Dashboard 该服务 → Environment 设置 PASSWORD（必须，否则站点提示管理员配置）
+#   5. 用分配到的 *.onrender.com 地址访问
+# 注意：Free 版服务闲置约 15 分钟后会自动休眠，下次访问会重新唤醒。
+# ============================================================
+services:
+  - type: web
+    name: libretv
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      # PASSWORD 设为 sync:false，由你在 Dashboard 手动填写，避免明文进仓库
+      - key: PASSWORD
+        sync: false
