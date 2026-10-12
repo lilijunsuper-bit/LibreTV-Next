@@ -1,0 +1,31 @@
+# ============================================================
+# LibreTV · Fly.io 部署配置（替代方案）
+# 仓库：lilijunsuper-bit/LibreTV-Next
+# 部署步骤：
+#   1. 安装 flyctl：powershell -c "irm https://fly.io/install.ps1 | iex"
+#   2. fly auth login
+#   3. cd 到仓库目录后：fly launch（读取本 fly.toml）
+#   4. 设置密码：fly secrets set PASSWORD=你的密码
+#   5. 部署：fly deploy
+# 注意：Fly.io 免费额度含约 3 台 256MB shared-cpu 实例；用满会按量计费。
+# ============================================================
+app = "libretv"
+primary_region = "hkg"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  HOSTNAME = "0.0.0.0"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[vm]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
